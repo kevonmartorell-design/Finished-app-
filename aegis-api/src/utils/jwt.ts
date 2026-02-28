@@ -37,7 +37,7 @@ export function signAccessToken(payload: {
       type: 'access',
     },
     jwtConfig.ACCESS_SECRET,
-    { expiresIn: jwtConfig.ACCESS_EXPIRY }
+    { expiresIn: jwtConfig.ACCESS_EXPIRY as any }
   );
 }
 
@@ -56,7 +56,7 @@ export function signRefreshToken(payload: {
       type: 'refresh',
     },
     jwtConfig.REFRESH_SECRET,
-    { expiresIn: jwtConfig.REFRESH_EXPIRY }
+    { expiresIn: jwtConfig.REFRESH_EXPIRY as any }
   );
 }
 
