@@ -7,6 +7,8 @@ import { AppError } from './utils/errors';
 import logger from './utils/logger';
 import authRoutes from './routes/auth';
 import userRoutes from './routes/user';
+import billingRoutes from './routes/billing';
+import stripeWebhookHandler from './webhooks/stripe';
 import { startInactivityJob } from './jobs/inactivityJob';
 
 const app = express();
@@ -19,6 +21,9 @@ app.use(cors({
   origin: env.ALLOWED_ORIGINS,
   credentials: true,
 }));
+
+// ─── Stripe Webhook (raw body — must be before JSON parser) ─────
+app.post('/billing/stripe/webhook', express.raw({ type: 'application/json' }), stripeWebhookHandler);
 
 // ─── Body Parsing ────────────────────────────────────────────────
 app.use(express.json({ limit: '10kb' }));
@@ -38,6 +43,7 @@ app.get('/health', (_req, res) => {
 // ─── Routes ──────────────────────────────────────────────────────
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
+app.use('/billing', billingRoutes);
 
 // ─── 404 Handler ─────────────────────────────────────────────────
 app.use((req, res) => {

@@ -25,6 +25,7 @@
     "node-cron": "^3.0.3",
     "qrcode": "^1.5.3",
     "speakeasy": "^2.0.0",
+    "stripe": "^17.7.0",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

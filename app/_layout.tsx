@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { View, ActivityIndicator, Platform } from 'react-native';
 import { Stack } from 'expo-router';
 import { useFonts } from 'expo-font';
@@ -6,13 +5,13 @@ import { StatusBar } from 'expo-status-bar';
 import { AuthProvider } from '@/lib/auth-context';
 
 export default function RootLayout() {
-  const [fontsLoaded] = useFonts({
+  const [fontsLoaded, fontError] = useFonts({
     Orbitron: require('@/assets/fonts/Orbitron-Bold.ttf'),
     Roboto: require('@/assets/fonts/Roboto-Regular.ttf'),
     'Roboto-Medium': require('@/assets/fonts/Roboto-Medium.ttf'),
   });
 
-  if (!fontsLoaded) {
+  if (!fontsLoaded && !fontError) {
     return (
       <View style={{ flex: 1, backgroundColor: '#6000FF', alignItems: 'center', justifyContent: 'center' }}>
         <ActivityIndicator size="large" color="#FFFFFF" />

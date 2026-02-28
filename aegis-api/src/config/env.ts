@@ -22,6 +22,12 @@ interface Env {
   PASSWORD_RESET_TOKEN_TTL_HOURS: number;
   UNLOCK_TOKEN_TTL_HOURS: number;
   REFRESH_TOKEN_INACTIVITY_DAYS: number;
+
+  // Stripe (Agent 2 — Billing)
+  STRIPE_SECRET_KEY: string;
+  STRIPE_WEBHOOK_SECRET: string;
+  STRIPE_SOLO_PRICE_ID: string;
+  STRIPE_BUSINESS_PRICE_ID: string;
 }
 
 const required = [
@@ -68,6 +74,12 @@ const env: Env = Object.freeze({
   NOTIFICATION_SERVICE_URL: process.env.NOTIFICATION_SERVICE_URL || 'http://localhost:3006',
   ALLOWED_ORIGINS: (process.env.ALLOWED_ORIGINS || 'http://localhost:8081').split(','),
   FRONTEND_URL: process.env.FRONTEND_URL || 'http://localhost:8081',
+
+  // Stripe (Agent 2 — Billing)
+  STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY || '',
+  STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET || '',
+  STRIPE_SOLO_PRICE_ID: process.env.STRIPE_SOLO_PRICE_ID || '',
+  STRIPE_BUSINESS_PRICE_ID: process.env.STRIPE_BUSINESS_PRICE_ID || '',
 
   // Security constants
   MAX_FAILED_LOGINS: 5,
