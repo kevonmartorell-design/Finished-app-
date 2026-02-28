@@ -1,5 +1,4 @@
-// TODO: Agent 1/2 implements plan gating logic
-// This module checks if a user's plan allows access to specific features.
+import { useAuth } from '@/lib/auth-context';
 
 type Plan = 'solo' | 'business';
 
@@ -30,3 +29,14 @@ export const BUSINESS_ONLY_FEATURES = [
   'audit-log',
   'reports',
 ] as const;
+
+/**
+ * UI-level plan gate hook.
+ * Returns true if the current user has access to the required plan.
+ * Note: UI gating is UX only — server enforces the real gate.
+ */
+export function usePlanGate(requiredPlan: Plan): boolean {
+  const { user } = useAuth();
+  if (!user) return false;
+  return canAccess({ requiredPlan, userPlan: user.plan });
+}

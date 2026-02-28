@@ -1,21 +1,14 @@
 import { create } from 'zustand';
+import type { User } from '@/lib/auth-context';
 
 // ── Types ──────────────────────────────────────────────────────────
-
-interface User {
-  id: string;
-  email: string;
-  name: string | null;
-  plan: 'solo' | 'business';
-  subscription_status: 'trialing' | 'active' | 'past_due' | 'canceled';
-  avatar_url: string | null;
-}
 
 interface AuthSlice {
   user: User | null;
   accessToken: string | null;
   setUser: (user: User | null) => void;
   setAccessToken: (token: string | null) => void;
+  setAuth: (user: User, token: string) => void;
   clearAuth: () => void;
 }
 
@@ -59,6 +52,8 @@ export const useStore = create<StoreState>((set) => ({
       set((state) => ({ auth: { ...state.auth, user } })),
     setAccessToken: (token) =>
       set((state) => ({ auth: { ...state.auth, accessToken: token } })),
+    setAuth: (user, token) =>
+      set((state) => ({ auth: { ...state.auth, user, accessToken: token } })),
     clearAuth: () =>
       set((state) => ({ auth: { ...state.auth, user: null, accessToken: null } })),
   },
